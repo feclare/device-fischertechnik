@@ -14,7 +14,13 @@
 # limitations under the License.
 #
 ###############################################################################
-FROM alpine:3.4
+FROM maven:3.3-jdk-8-alpine
+
+COPY docker-files/pom.xml .
+
+RUN mvn dependency:copy -q
+
+FROM alpine:3.6
 MAINTAINER Tyler Cox <tyler_cox@dell.com>
 
 RUN apk --update add openjdk8-jre
@@ -25,8 +31,8 @@ ENV APP=fuse-device-fischertechnik.jar
 ENV APP_PORT=49985
 
 #copy JAR and property files to the image
-COPY *.jar $APP_DIR/$APP
-COPY *.properties $APP_DIR/
+COPY --from=0 *.jar $APP_DIR/$APP
+COPY docker-files/*.properties $APP_DIR/
 
 RUN chown root:root /dev/tty*
 
