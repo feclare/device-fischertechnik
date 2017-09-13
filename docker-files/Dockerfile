@@ -27,7 +27,7 @@ RUN apk --update add openjdk8-jre
 
 # environment variables
 ENV APP_DIR=/edgex/edgex-device-fischertechnik
-ENV APP=fuse-device-fischertechnik.jar
+ENV APP=device-fischertechnik.jar
 ENV APP_PORT=49985
 
 #copy JAR and property files to the image
